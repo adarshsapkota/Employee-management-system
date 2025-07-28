@@ -1,0 +1,205 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.dashboard-container h1 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  text-align: center;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.card h2 {
+  color: #3498db;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.card-item {
+  background: #f8f9fa;
+  margin-bottom: 12px;
+  padding: 15px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-item:hover {
+  background: #e9ecef;
+}
+
+.card-item-content {
+  flex-grow: 1;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 15px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-planned {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-ongoing {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.status-completed {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.status-cancelled {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+/* Status Border Variant (optional) */
+.card-item.planned {
+  border-left: 4px solid #1976d2;
+}
+
+.card-item.ongoing {
+  border-left: 4px solid #ff8f00;
+}
+
+.card-item.completed {
+  border-left: 4px solid #388e3c;
+}
+
+.card-item.cancelled {
+  border-left: 4px solid #d32f2f;
+}
+
+/* Employee Styles */
+.employee-details {
+  width: 100%;
+}
+
+.employee-meta {
+  display: flex;
+  gap: 10px;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.salary {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.role {
+  color: #5c6bc0;
+  font-style: italic;
+}
+
+/* Loading and Error States */
+.loading-spinner {
+  color: #7f8c8d;
+  text-align: center;
+  padding: 20px;
+  animation: pulse 1.5s infinite;
+}
+
+.error-message {
+  color: #e74c3c;
+  background: #fadbd8;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+  margin: 10px 0;
+}
+
+.no-data {
+  color: #95a5a6;
+  text-align: center;
+  font-style: italic;
+  padding: 15px;
+}
+
+.total-count {
+  font-weight: 600;
+  color: #34495e;
+  margin-top: 15px;
+  text-align: right;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-item {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}

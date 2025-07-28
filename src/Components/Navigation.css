@@ -1,0 +1,40 @@
+.navigation {
+  background-color: #f8f9fa;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.Link {
+  text-decoration: none;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  background-color: #e9ecef;
+  border: 1px solid #dee2e6;
+  margin-left: 20px;
+}
+
+.Link:hover {
+  background-color: #dee2e6;
+  transform: translateY(-1px);
+}
+
+.Link:active {
+  transform: translateY(0);
+}
+
+.Link.active {
+  background-color: #495057;
+  color: white;
+}
