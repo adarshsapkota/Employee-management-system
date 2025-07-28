@@ -1,22 +1,27 @@
-import "./App.css";
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./Components/Dashboard";
-import Employee from "./Components/Employee";
-import Department from "./Components/Department";
-import Project from "./Components/Project";
 import Navigation from "./Components/Navigation";
+import LoadingSpinner from "./Components/LoadingSpinner";
+import "./App.css";
+
+const Dashboard = lazy(() => import("./Components/Dashboard"));
+const Employee = lazy(() => import("./Components/Employee"));
+const Department = lazy(() => import("./Components/Department"));
+const Project = lazy(() => import("./Components/Project"));
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Navigation />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/Employee" element={<Employee />} />
-          <Route path="/Department" element={<Department />} />
-          <Route path="/Project" element={<Project />} />
-        </Routes>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/employee" element={<Employee />} />
+            <Route path="/department" element={<Department />} />
+            <Route path="/project" element={<Project />} />
+          </Routes>
+        </Suspense>
       </Router>
     </div>
   );
