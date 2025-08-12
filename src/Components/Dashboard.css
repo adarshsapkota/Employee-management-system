@@ -91,7 +91,6 @@
   color: #d32f2f;
 }
 
-/* Status Border Variant (optional) */
 .card-item.planned {
   border-left: 4px solid #1976d2;
 }
@@ -108,7 +107,6 @@
   border-left: 4px solid #d32f2f;
 }
 
-/* Employee Styles */
 .employee-details {
   width: 100%;
 }
@@ -130,7 +128,6 @@
   font-style: italic;
 }
 
-/* Loading and Error States */
 .loading-spinner {
   color: #7f8c8d;
   text-align: center;
@@ -161,7 +158,6 @@
   text-align: right;
 }
 
-/* Animations */
 @keyframes pulse {
   0% {
     opacity: 0.6;
@@ -189,7 +185,6 @@
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .card-grid {
     grid-template-columns: 1fr;

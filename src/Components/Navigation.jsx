@@ -5,7 +5,7 @@ function Navigation() {
   return (
     <div className="navigation">
       <h1>DG</h1>
-      <Link to="/" className="Link">
+      <Link to="/dashboard" className="Link">
         Home
       </Link>
 

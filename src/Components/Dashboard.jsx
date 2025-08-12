@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import instance from "../axios/axiosInstance";
 import "./Dashboard.css";
 
@@ -17,57 +17,90 @@ function Dashboard() {
     employees: null,
   });
 
+  const verifyToken = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("No token found in localStorage");
+      return false;
+    }
+
+    if (token.startsWith('"') && token.endsWith('"')) {
+      const cleanToken = token.slice(1, -1);
+      localStorage.setItem("authToken", cleanToken);
+      console.warn("Removed quotes from token");
+      return true;
+    }
+
+    return true;
+  };
+
   useEffect(() => {
-    // Fetch projects
-    instance
-      .get("/api/projects")
-      .then((res) => {
-        console.log("Projects API response:", res.data);
-        setProjects(res.data?.content || res.data || []);
-      })
-      .catch((err) => {
-        console.error("Error fetching projects:", err);
-        setError((prev) => ({ ...prev, projects: "Failed to load projects" }));
-      })
-      .finally(() => {
-        setLoading((prev) => ({ ...prev, projects: false }));
+    if (!verifyToken()) {
+      setError({
+        projects: "Authentication required",
+        departments: "Authentication required",
+        employees: "Authentication required",
       });
-
-    // Fetch departments
-    instance
-      .get("/departments")
-      .then((res) => {
-        setDepartments(res.data || []);
-      })
-      .catch((err) => {
-        console.error("Error fetching departments:", err);
-        setError((prev) => ({
-          ...prev,
-          departments: "Failed to load departments",
-        }));
-      })
-      .finally(() => {
-        setLoading((prev) => ({ ...prev, departments: false }));
+      setLoading({
+        projects: false,
+        departments: false,
+        employees: false,
       });
+      return;
+    }
 
-    // Fetch employees
-    instance
-      .get("/employee")
-      .then((res) => {
-        const data = res.data?.content || res.data || [];
-        const sorted = data.sort((a, b) => b.salary - a.salary);
+    const fetchData = async () => {
+      try {
+        // Fetch projects
+        const projectsRes = await instance.get("/api/auth/welcome");
+        const projectsData = Array.isArray(projectsRes.data)
+          ? projectsRes.data
+          : Array.isArray(projectsRes.data?.content)
+          ? projectsRes.data.content
+          : [];
+        setProjects(projectsData);
+
+        // Fetch departments
+        const deptRes = await instance.get("/departments");
+        const deptData = Array.isArray(deptRes.data) ? deptRes.data : [];
+        setDepartments(deptData);
+
+        // Fetch employees
+        const empRes = await instance.get("/employee/all");
+        const empData = Array.isArray(empRes.data)
+          ? empRes.data
+          : Array.isArray(empRes.data?.content)
+          ? empRes.data.content
+          : [];
+        const sorted = [...empData].sort(
+          (a, b) => (b.salary || 0) - (a.salary || 0)
+        );
         setEmployees(sorted);
-      })
-      .catch((err) => {
-        console.error("Error fetching employees:", err);
-        setError((prev) => ({
-          ...prev,
-          employees: "Failed to load employees",
-        }));
-      })
-      .finally(() => {
-        setLoading((prev) => ({ ...prev, employees: false }));
-      });
+      } catch (err) {
+        console.error("API Error:", err);
+        if (err.response?.status === 403) {
+          setError({
+            projects: "Access denied - check authentication",
+            departments: "Access denied - check authentication",
+            employees: "Access denied - check authentication",
+          });
+        } else {
+          setError({
+            projects: "Failed to load projects",
+            departments: "Failed to load departments",
+            employees: "Failed to load employees",
+          });
+        }
+      } finally {
+        setLoading({
+          projects: false,
+          departments: false,
+          employees: false,
+        });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const getStatusClass = (status) => {
